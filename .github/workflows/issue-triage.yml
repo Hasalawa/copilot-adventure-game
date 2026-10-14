@@ -1,0 +1,75 @@
+name: Issue triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  triage:
+    name: Label issue
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply labels and acknowledge new issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const text = `${issue.title}\n${issue.body || ""}`.toLowerCase();
+            const labels = new Set(["needs-triage"]);
+
+            if (/\bbug\b|error|fail|broken|crash|exception/.test(text)) {
+              labels.add("bug");
+            }
+            if (/\bfeature\b|enhancement|request|suggest|add\b/.test(text)) {
+              labels.add("enhancement");
+            }
+            if (/readme|documentation|docs?\b|typo/.test(text)) {
+              labels.add("documentation");
+            }
+            if (/security|vulnerab|exploit|secret|credential/.test(text)) {
+              labels.add("security");
+            }
+
+            for (const label of labels) {
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: label,
+                });
+              } catch (error) {
+                if (error.status !== 404) {
+                  throw error;
+                }
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: label,
+                  color: label === "security" ? "b60205" : "ededed",
+                });
+              }
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              labels: [...labels],
+            });
+
+            if (context.payload.action === "opened") {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: [
+                  "Thanks for opening this issue! It has been automatically labeled for triage.",
+                  "",
+                  "A maintainer will review it when possible. If this is a security vulnerability, please follow the private reporting instructions in [SECURITY.md](../blob/main/SECURITY.md) instead of sharing sensitive details publicly.",
+                ].join("\n"),
+              });
+            }
