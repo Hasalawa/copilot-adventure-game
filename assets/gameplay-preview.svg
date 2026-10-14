@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">Moonlit Map Adventure terminal preview</title>
+  <desc id="desc">A dark terminal window showing the welcome message and three adventure choices.</desc>
+  <defs>
+    <linearGradient id="window" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#192342"/>
+      <stop offset="1" stop-color="#0d142b"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="430" rx="18" fill="#e9a84b" opacity=".18"/>
+  <rect x="18" y="18" width="864" height="394" rx="14" fill="url(#window)" stroke="#e9a84b" stroke-opacity=".4"/>
+  <rect x="18" y="18" width="864" height="42" rx="14" fill="#222e50"/>
+  <circle cx="45" cy="39" r="6" fill="#ff7770"/>
+  <circle cx="67" cy="39" r="6" fill="#ffd166"/>
+  <circle cx="89" cy="39" r="6" fill="#72d69c"/>
+  <text x="450" y="44" text-anchor="middle" fill="#a9b6d3" font-family="monospace" font-size="14">moonlit-map — adventure.py</text>
+  <g font-family="monospace" font-size="18">
+    <text x="55" y="100" fill="#ffe8a3">WELCOME TO THE MOONLIT MAP</text>
+    <text x="55" y="130" fill="#a9b6d3">Your choices shape the story. Choose carefully!</text>
+    <text x="55" y="177" fill="#fff1bd">SCENE 1: THE CROSSROADS</text>
+    <text x="55" y="211" fill="#d1d9eb">A weathered sign points toward a moonlit forest,</text>
+    <text x="55" y="238" fill="#d1d9eb">a lonely tower, and a river.</text>
+    <text x="55" y="282" fill="#e9a84b">1.</text><text x="84" y="282" fill="#d1d9eb">Follow the forest path</text>
+    <text x="55" y="313" fill="#e9a84b">2.</text><text x="84" y="313" fill="#d1d9eb">Climb the hill toward the tower</text>
+    <text x="55" y="344" fill="#e9a84b">3.</text><text x="84" y="344" fill="#d1d9eb">Walk down to the river</text>
+    <text x="55" y="381" fill="#72d69c">Choose an option: <tspan fill="#fff1bd">_</tspan></text>
+  </g>
+</svg>
