@@ -92,6 +92,25 @@ Run tests when test files are present:
 python3 -m unittest discover --start-directory . --pattern "test*.py" --verbose
 ```
 
+## 🔒 Main branch protection
+
+The `main` branch is intended to receive changes through pull requests.
+The [`Protect main branch`](.github/workflows/protect-main.yml) workflow fails
+when a contributor pushes directly to `main` and directs them to open a pull
+request instead.
+
+For complete protection, repository administrators should also enable GitHub
+branch protection or a ruleset for `main` with:
+
+- Pull requests required before merging
+- Required CI status checks
+- At least one approving review
+- Stale approvals dismissed when new commits are pushed
+- Force pushes and branch deletion disabled
+
+The workflow provides feedback after a direct push; GitHub branch protection
+is what prevents the push from being accepted.
+
 ## ✎ Contributing
 
 New scenes, endings, story polish, tests, and documentation are welcome.
@@ -102,8 +121,7 @@ Please also review the [Code of Conduct](CODE_OF_CONDUCT.md) and
 
 ## License
 
-No license file has been added to this repository yet. Please contact the
-repository maintainers before redistributing the project.
+Moonlit Map Adventure is available under the [MIT License](LICENSE).
 
 <div align="center">
   <br>

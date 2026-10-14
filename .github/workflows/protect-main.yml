@@ -1,0 +1,24 @@
+name: Protect main branch
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  direct-push-check:
+    name: Check main branch push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reject non-owner direct pushes
+        env:
+          PUSH_ACTOR: ${{ github.actor }}
+        run: |
+          if [ "$PUSH_ACTOR" != "Hasalawa" ]; then
+            echo "::error::Direct pushes to main are not allowed for contributors."
+            echo "Please open a pull request from a feature branch instead."
+            exit 1
+          fi
+          echo "Push initiated by the repository owner."
