@@ -92,6 +92,12 @@ Run tests when test files are present:
 python3 -m unittest discover --start-directory . --pattern "test*.py" --verbose
 ```
 
+Issues and pull requests are automatically labeled by the
+[`Issue triage`](.github/workflows/issue-triage.yml) and
+[`Pull request triage`](.github/workflows/pull-request-triage.yml) workflows.
+Labels can identify bugs, enhancements, documentation, security reports, and
+items that need review.
+
 ## 🔒 Main branch protection
 
 The `main` branch is intended to receive changes through pull requests.

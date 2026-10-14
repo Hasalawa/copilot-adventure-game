@@ -2,7 +2,7 @@ name: Issue triage
 
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, reopened]
 
 permissions:
   contents: read
@@ -32,6 +32,24 @@ jobs:
             }
             if (/security|vulnerab|exploit|secret|credential/.test(text)) {
               labels.add("security");
+            }
+
+            const managedLabels = ["bug", "enhancement", "documentation", "security"];
+            for (const label of managedLabels) {
+              if (!labels.has(label)) {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    name: label,
+                  });
+                } catch (error) {
+                  if (error.status !== 404) {
+                    throw error;
+                  }
+                }
+              }
             }
 
             for (const label of labels) {
